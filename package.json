@@ -1,0 +1,22 @@
+{
+  "name": "game_sales",
+  "version": "1.0.0",
+  "description": "my game, fun",
+  "main": "index.js",
+  "dependencies": {
+    "phaser": "^3.22.0"
+  },
+  "devDependencies": {
+    "expose-loader": "^0.7.5",
+    "webpack-merge": "^4.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "maxdzy"
+  },
+  "author": "Maxim",
+  "license": "ISC"
+}
