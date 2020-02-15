@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Phaser 3</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="shortcut icon" href="quest.png" type="image/x-icon"/>
+    <script src="node_modules/phaser/dist/phaser.min.js"></script>
+    <!--    <script src="//cdn.jsdelivr.net/npm/phaser@3.21.0/dist/phaser.js"></script>-->
+    <style type="text/css">
+        html, body,
+        #game-container {
+            margin: 0;
+            padding: 0;
+        }
+        #game-container {
+            min-width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #game-container>canvas {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container"></div>
+    <script type="text/javascript" src="src/main.js"></script>
+</body>
+</html>
