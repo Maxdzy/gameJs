@@ -41,16 +41,28 @@ let WorldScene = new Phaser.Class({
         let map = this.make.tilemap({ key: 'map' });
         let tiles = map.addTilesetImage('w2', 'tiles');
         // let tiles = map.addTilesetImage('spritesheet', 'tiles');
+
+        // Load layer
         let grass = map.createStaticLayer('Grass', tiles, 0, 0);
         let dirt = map.createStaticLayer('Dirt', tiles, 0, 0);
+        let road = map.createStaticLayer('Road', tiles, 0, 0);
+        let city_region = map.createStaticLayer('City Region', tiles, 0, 0);
         let water = map.createStaticLayer('Water', tiles, 0, 0);
         let wall = map.createStaticLayer('Wall', tiles, 0, 0);
+
         // let obstacles = map.createStaticLayer('Obstacles', tiles, 0, 0);
         // obstacles.setCollisionByExclusion([-1]);
-        water.setCollisionByExclusion([-1]);
-        wall.setCollisionByExclusion([-1]);
+        water.setCollisionByProperty({ collides: true });
+        wall.setCollisionByProperty({ collides: true });
 
-        this.player = this.physics.add.sprite(50, 100, 'player', 0);
+        const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point");
+        console.log(spawnPoint, map, tiles);
+        if (spawnPoint) {
+            // player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "atlas", "misa-front");
+            this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'player', 0);
+        } else {
+            this.player = this.physics.add.sprite(48, 79, 'player', 2);
+        }
 
         this.physics.world.bounds.width = map.widthInPixels;
         this.physics.world.bounds.height = map.heightInPixels;
@@ -143,7 +155,7 @@ let WorldScene = new Phaser.Class({
         this.physics.add.collider(this.player, water);
         this.physics.add.collider(this.player, wall);
 
-        this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
+        // this.spawns = this.physics.add.group({ classType: Phaser.GameObjects.Zone });
         // for(let i = 0; i < 30; i++) {
         //     let x = Phaser.Math.RND.between(0, this.physics.world.bounds.width);
         //     let y = Phaser.Math.RND.between(0, this.physics.world.bounds.height);
@@ -179,6 +191,12 @@ let WorldScene = new Phaser.Class({
         } else if (this.cursors.left.isDown && this.cursors.down.isDown) {
             this.player.anims.play('left-down', true);
             this.player.flipX = true; //Разворачиваем спрайты персонажа вдоль оси X
+        } else if (this.cursors.right.isDown && this.cursors.up.isDown) {
+            this.player.anims.play('right-up', true);
+            this.player.flipX = true; //Разворачиваем спрайты персонажа вдоль оси X
+        } else if (this.cursors.right.isDown && this.cursors.down.isDown) {
+            this.player.anims.play('right-down', true);
+            this.player.flipX = true; //Разворачиваем спрайты персонажа вдоль оси X
         } else if (this.cursors.left.isDown) {
             this.player.anims.play('left', true);
             this.player.flipX = true; //Разворачиваем спрайты персонажа вдоль оси X
@@ -211,7 +229,9 @@ let config = {
     parent: 'game-container',
     // parent: 'content',
     width: 320,
+    // width: 640,
     height: 240,
+    // height: 480,
     zoom: 2,
     pixelArt: true,
     physics: {
